@@ -1,2 +1,2 @@
-# Here i will uploading the codes that i am practicing with python..
+# Here i will uploading the DSA problems and implementaion codes that i am practicing with python..
 
