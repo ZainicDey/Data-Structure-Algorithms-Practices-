@@ -10,34 +10,6 @@ class SinglyLinkedList:
     def __init__(self):
         self.head = None
         self.tail = None
-    def insertAtHead(self,value):
-        newNode = Node(value)
-        if self.head is None:
-            self.head = newNode
-            self.tail = newNode
-        else:
-            newNode.next = self.head
-            self.head = newNode
-    def print(self):
-        if self.head is None:
-            print('list is empty')
-        else:
-            temp = self.head
-            while(temp is not None):
-                if temp.next is None:
-                    print(temp.value)
-                else:
-                    print(f'{temp.value}->', end='')
-                temp = temp.next
-            print()
-    def insertAtTail(self,value):
-        newNode = Node(value)
-        if self.head is None:
-            self.head = newNode
-            self.tail = newNode
-        else:
-            self.tail.next=newNode
-            self.tail = newNode
     def insertAtAny(self,value, position):
         #position 0 means insert at head and position last means insert at tail otherwise in the middle 
         if position == 0:
@@ -65,23 +37,50 @@ class SinglyLinkedList:
                 self.tail = newNode
             newNode.next = temp.next
             temp.next = newNode
-
+    def delete_node(self,position):
+        if self.head == None:
+            print('Nothing to delete')
+            return
+        if position == 0:
+            tempNode = self.head
+            self.head = self.head.next
+            if self.head == None:
+                self.tail = None
+        else:
+            tempNode = self.head
+            count = 1
+            while count < position and tempNode.next is not None:
+                count+=1
+                tempNode = tempNode.next
+            if count != position or tempNode.next is None:
+                print('Invalid Position')
+                return
+            tempNode.next = tempNode.next.next
+            if tempNode.next == None:
+                self.tail = tempNode
+    def print(self):
+        if self.head is None:
+            print('list is empty')
+        else:
+            temp = self.head
+            while(temp is not None):
+                if temp.next is None:
+                    print(temp.value)
+                else:
+                    print(f'{temp.value}->', end='')
+                temp = temp.next
+            print()
 #the main fucntion operations             
 singly = SinglyLinkedList()
 while True:
     print('Choose option:')
-    n = int(input('1.Insert at head\n2.Insert at tail\n3.Insert at any position\n4.Print the list\n'))
+    n = int(input('1.Insert element\n2.Delete an element\n3.Print the list\n'))
     if n==1:
-        value = int(input('Enter the element:'))
-        singly.insertAtHead(value)
-    elif n==2:
-        value = int(input('Enter the element:'))
-        singly.insertAtTail(value)
-    elif n==3:
         value = int(input('Enter the element:'))
         position = int(input('Enter the postion:'))
         singly.insertAtAny(value,position)
-    elif n==4:
+    elif n==2:
+        position = int(input('Enter the postion to delete:'))
+        singly.delete_node(position)
+    elif n==3:
         singly.print()
-    else:
-        print('Invalid input')

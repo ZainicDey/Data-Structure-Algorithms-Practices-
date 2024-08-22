@@ -10,34 +10,6 @@ class SinglyLinkedList:
     def __init__(self):
         self.head = None
         self.tail = None
-    def insertAtHead(self,value):
-        newNode = Node(value)
-        if self.head is None:
-            self.head = newNode
-            self.tail = newNode
-        else:
-            newNode.next = self.head
-            self.head = newNode
-    def print(self):
-        if self.head is None:
-            print('list is empty')
-        else:
-            temp = self.head
-            while(temp is not None):
-                if temp.next is None:
-                    print(temp.value)
-                else:
-                    print(f'{temp.value}->', end='')
-                temp = temp.next
-            print()
-    def insertAtTail(self,value):
-        newNode = Node(value)
-        if self.head is None:
-            self.head = newNode
-            self.tail = newNode
-        else:
-            self.tail.next=newNode
-            self.tail = newNode
     def insertAtAny(self,value, position):
         #position 0 means insert at head and position last means insert at tail otherwise in the middle 
         if position == 0:
@@ -65,23 +37,40 @@ class SinglyLinkedList:
                 self.tail = newNode
             newNode.next = temp.next
             temp.next = newNode
-
+    
+    def print(self):
+        if self.head is None:
+            print('list is empty')
+        else:
+            temp = self.head
+            while(temp is not None):
+                if temp.next is None:
+                    print(temp.value)
+                else:
+                    print(f'{temp.value}->', end='')
+                temp = temp.next
+            print()
+    def reverse_list_recursive(self, Node):
+        if Node.next is None:
+            self.head = Node
+            return
+        self.reverse_list_recursive(Node.next)
+        nextNode = Node.next
+        nextNode.next = Node
+        Node.next = None
 #the main fucntion operations             
 singly = SinglyLinkedList()
 while True:
     print('Choose option:')
-    n = int(input('1.Insert at head\n2.Insert at tail\n3.Insert at any position\n4.Print the list\n'))
+    n = int(input('1.Insert element\n2.Delete an element\n3.Reverse linked list\n4.Print the list\n'))
     if n==1:
-        value = int(input('Enter the element:'))
-        singly.insertAtHead(value)
-    elif n==2:
-        value = int(input('Enter the element:'))
-        singly.insertAtTail(value)
-    elif n==3:
         value = int(input('Enter the element:'))
         position = int(input('Enter the postion:'))
         singly.insertAtAny(value,position)
+    elif n==2:
+        position = int(input('Enter the postion to delete:'))
+        singly.delete_node(position)
+    elif n==3:
+        singly.reverse_list_iterative()
     elif n==4:
         singly.print()
-    else:
-        print('Invalid input')
